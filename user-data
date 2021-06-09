@@ -1,0 +1,12 @@
+yum update -y
+wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins java-1.8.0-openjdk-devel -y
+wget -O install.sh
+wget -O plugins.txt
+wget -O /var/lib/jenkins/casa.yaml
+chmod 760 install.sh
+./install.sh <plugins.txt
+export CASC_JENKINS_CONFIG=/var/lib/jenkins/casc.yaml
+systemctl start jenkins
+cat /var/lib/jenkins/secrets/initialAdminPassword
