@@ -1,5 +1,5 @@
 #!/bin/bash -eu
-
+JENKINS_UC=https://updates.jenkins.io
 # Resolve dependencies and download plugins given on the command line
 #
 # FROM jenkins

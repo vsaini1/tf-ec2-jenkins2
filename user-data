@@ -1,11 +1,16 @@
+#!/bin/bash -ex
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+echo BEGIN
 yum update -y
 wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
 rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 yum install jenkins java-1.8.0-openjdk-devel -y
 wget -O install.sh https://raw.githubusercontent.com/vsaini1/tf-ec2-jenkins2/main/install-plugins.sh
+wget -O /usr/local/bin/jenkins-support https://raw.githubusercontent.com/vsaini1/tf-ec2-jenkins2/main/jenkins-support
 wget -O plugins.txt https://raw.githubusercontent.com/vsaini1/tf-ec2-jenkins2/main/plugins.txt
-wget -O /var/lib/jenkins/casa.yaml https://raw.githubusercontent.com/vsaini1/tf-ec2-jenkins2/main/casa.yaml
+wget -O /var/lib/jenkins/casc.yaml https://raw.githubusercontent.com/vsaini1/tf-ec2-jenkins2/main/casc.yaml
 chmod 754 install.sh
+chmod 775 /usr/local/bin/jenkins-support
 ./install.sh <plugins.txt
 export CASC_JENKINS_CONFIG=/var/lib/jenkins/casc.yaml
 systemctl start jenkins
